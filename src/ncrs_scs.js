@@ -48,12 +48,6 @@ function funcx(data, type, duration, model, onUpdate) {
   // Get the new START time by subtracting H hours from maxTIME.
   let newStartTime = maxVal[1] - duration;
 
-  // For every element from newStartTime to maxTIME:
-  const finalStartSet = newValSet.filter((v) => {
-    return v.time >= newStartTime && v.time <= maxVal[1]
-  })
-
-  let thisPos = finalStartSet.findIndex((el)=>{return el.time === maxVal[1]})
   let valAtNewStart = data[type][data[type].findIndex((el)=>{return el.time === newStartTime})].frac;
   // VALUE2 = VALUE[now] - $VALUE$[newSTART]
   const val2Set = data[type].map((el, i) => ({
@@ -87,27 +81,28 @@ function funcx(data, type, duration, model, onUpdate) {
     place the timeseries and the raingages into a object or model?
     Return the object(s) and update the model using the returned objects.
   */
-  let modelUp = { RAINGAGES: {}, TIMESERIES: {} }
+  let modelUp = { RAINGAGES: {}, TIMESERIES: [] }
   modelUp.RAINGAGES = {
-    "RG1": {
+    "swmmjsRG": {
       "Format": "CUMULATIVE",
       "Interval": "0:06",
       "SCF": "1.0",
       "Source": "TIMESERIES",
-      "SeriesName": "TS1",
+      "SeriesName": "swmmjsTS",
       "Description": ""
     }
   }
 
   modelUp.TIMESERIES = resultSet.reduce((map, obj, i) => 
-    {map[i] = {"TimeSeries": "TS1","Date": "","Time": String(obj.time),"Value": String(obj.frac)}; return map;}, {} );
+    {map[i] = {"TimeSeries": "swmmjsTS","Date": "","Time": String(obj.time),"Value": String(obj.frac)}; return map;}, [] );
 
-  onUpdate({...model}, model.RAINGAGES = modelUp.RAINGAGES)
-  onUpdate({...model}, model.TIMESERIES = modelUp.TIMESERIES)
-  onUpdate({...model}, model.RAINGAGES = modelUp.RAINGAGES)
-  onUpdate({...model}, model.TIMESERIES = modelUp.TIMESERIES)
-  console.log(JSON.stringify(modelUp.TIMESERIES, null, 2))
-  console.log(JSON.stringify(model.TIMESERIES, null, 2))
+  let newSeries = [...model.TIMESERIES, ...modelUp.TIMESERIES]
+  let newGages  = {...model.RAINGAGES, ...modelUp.RAINGAGES}
+  onUpdate({...model}, model.TIMESERIES = newSeries)
+  onUpdate({...model}, model.RAINGAGES = newGages)
+  onUpdate({...model}, {...model})
+
+  return;
 }
 
 export default funcx;

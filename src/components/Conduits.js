@@ -22,7 +22,10 @@ function Conduits({style={}, data={}, onUpdate=f=>f}){
 
   // This should probably be a useMemo, and not a
   // useEffect call. 
-  useEffect(() => {setLinkID(Object.keys(data.CONDUITS)[0])}, [Object.keys(data.CONDUITS)[0]])
+
+  useEffect(() => {
+    setLinkID(Object.keys(data.CONDUITS)[0])
+  }, [data.CONDUITS])
 
   // This shouldnt be linkIDs as in integers, this should
   // be linkIDs as in text strings.
@@ -60,19 +63,6 @@ function Conduits({style={}, data={}, onUpdate=f=>f}){
       <button onClick={nextID}>Next</button>
     </>
   )
-  // Dont forget to safeguard all these components for null linkID values (don't just send a default).
-  // Try and see if that doesn't mess stuff up in cases where there is a model with no links?
-  // Would I even care about that?
-  /*
-  return(
-    <>
-      <div>------------CONDUITS-------------</div>
-      <ConduitsInitFlow data={data} onUpdate={onUpdate} style={style} conduitName={linkID} />
-      <ConduitsMaxFlow data={data} onUpdate={onUpdate} style={style} conduitName={linkID} />
-      <button onClick={nextID}>Next</button>
-      <button onClick={prevID}>Prev</button>
-    </>
-  )*/
 }
 
 export default Conduits;

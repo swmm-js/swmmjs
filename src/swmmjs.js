@@ -127,7 +127,6 @@ function parseInput(text) {
 // Right now, autosaving just adds more clicks.
 function dataToInpString(model){
   let fullString = '';
-  let secStr = '';
 
   var parser = {
     // TITLE Title/Notes needs to consume all of the lines until the next section.
@@ -181,7 +180,7 @@ function dataToInpString(model){
             inpString += ';' + model[secStr][entry].Description + '\n';
         }
         inpString += entry.padEnd(17, ' ');
-        inpString += model[secStr][entry].Format.padEnd(10, ' ');
+        inpString += model[secStr][entry].Format.padEnd(11, ' ');
         inpString += model[secStr][entry].Interval.padEnd(7, ' ');
         inpString += model[secStr][entry].SCF.toString().padEnd(7, ' ');
         inpString += model[secStr][entry].Source.padEnd(11, ' ');

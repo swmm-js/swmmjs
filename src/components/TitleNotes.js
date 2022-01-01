@@ -13,7 +13,7 @@ function TitleNotes({data = {}, onUpdate, style = {}}) {
           onChange={e => 
           {
             onUpdate({...data}, data.TITLE = e.target.value);
-            onUpdate({...data}, data.TITLE = e.target.value);
+            onUpdate({...data}, {...data})
           }}
         >
         </textarea>
