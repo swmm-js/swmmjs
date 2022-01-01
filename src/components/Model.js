@@ -4,7 +4,7 @@ import OptionsMenu from './OptionsMenu';
 import MenuFile from './MenuFile';
 import MenuSave from './MenuSave';
 import Conduits from './Conduits';
-import { funcx } from "../ncrs_scs.js";
+import funcx from "../ncrs_scs.js";
 import data from '../data/nrcs_scs.json';
 
 

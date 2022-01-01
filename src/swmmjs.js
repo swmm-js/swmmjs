@@ -307,8 +307,8 @@ function saveInp(model) {
   }
 }
 
-module.exports = {
-  parseInput: parseInput,
-  saveInp: saveInp,
-  dataToInpString: dataToInpString
+export {
+  parseInput,
+  saveInp,
+  dataToInpString
 }

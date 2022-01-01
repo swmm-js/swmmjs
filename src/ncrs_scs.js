@@ -106,7 +106,6 @@ function funcx(data, type, duration, model, onUpdate) {
   onUpdate({...model}, model.TIMESERIES = modelUp.TIMESERIES)
 }
 
-module.exports = {
-  funcx: funcx
-}
+export default funcx;
 
+ 
