@@ -90,8 +90,8 @@ function funcx(data, type, duration, model, onUpdate) {
   let modelUp = { RAINGAGES: {}, TIMESERIES: {} }
   modelUp.RAINGAGES = {
     "RG1": {
-      "Format": "INTENSITY",
-      "Interval": "1:00",
+      "Format": "CUMULATIVE",
+      "Interval": "0:06",
       "SCF": "1.0",
       "Source": "TIMESERIES",
       "SeriesName": "TS1",
@@ -100,10 +100,14 @@ function funcx(data, type, duration, model, onUpdate) {
   }
 
   modelUp.TIMESERIES = resultSet.reduce((map, obj, i) => 
-    {map[i] = {"TimeSeries": "TS1","Date": "","Time": obj.time,"Value": obj.frac}; return map;}, {} );
+    {map[i] = {"TimeSeries": "TS1","Date": "","Time": String(obj.time),"Value": String(obj.frac)}; return map;}, {} );
 
   onUpdate({...model}, model.RAINGAGES = modelUp.RAINGAGES)
   onUpdate({...model}, model.TIMESERIES = modelUp.TIMESERIES)
+  onUpdate({...model}, model.RAINGAGES = modelUp.RAINGAGES)
+  onUpdate({...model}, model.TIMESERIES = modelUp.TIMESERIES)
+  console.log(JSON.stringify(modelUp.TIMESERIES, null, 2))
+  console.log(JSON.stringify(model.TIMESERIES, null, 2))
 }
 
 export default funcx;

@@ -7,10 +7,8 @@ function MenuFile({data = {}, onUpdate, style = {}}) {
     const reader = new FileReader()
     reader.onload = async (e) => { 
       const text = (e.target.result);
-      console.log(text);
       const theModel = parseInput(text);
 
-      console.log(theModel);
       onUpdate(theModel)
     };
     reader.readAsText(e.target.files[0])

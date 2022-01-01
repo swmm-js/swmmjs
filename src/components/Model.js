@@ -17,7 +17,7 @@ function Model({model = {}, title='', onUpdate = f => f}) {
     <MenuSave model={model} onUpdate={onUpdate}></MenuSave>
     <div>{title}</div>
     <div>{model.TITLE}</div>
-    <button onClick={f=>{funcx(data, "I", 6, model, onUpdate); console.log(JSON.stringify(model, null, 2))}}>Calc</button>
+    <button onClick={f=>{funcx(data, "I", 6, model, onUpdate); /*console.log(JSON.stringify(model, null, 2))*/}}>Calc</button>
     <div>-----------------------------</div>
     <Container className='p-3'>
       <Container className='p-5 mb-4 bg-light rounded-3'>

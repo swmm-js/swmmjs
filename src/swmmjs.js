@@ -58,17 +58,17 @@ function parseInput(text) {
       line = (line).trim();
       let m = line.split(/\b\s+/);
       if (m && m.length === 4){
-        model[section][Object.keys(model[section]).length] = {
+        model[section].push( {
                         TimeSeries: m[0].trim(),
                         Date: m[1].trim(), 
                         Time: m[2].trim(),
-                        Value: parseFloat(m[3])};
+                        Value: parseFloat(m[3])});
       } else {
-        model[section][Object.keys(model[section]).length] = {
+        model[section].push( {
                         TimeSeries: m[0].trim(),
                         Date: '', 
                         Time: m[1].trim(),
-                        Value: parseFloat(m[2])};
+                        Value: parseFloat(m[2])});
       }
     },  
   },
@@ -78,7 +78,7 @@ function parseInput(text) {
   // without affecting the components on each CUD.
   model = {   // Input file model variables. Related to a header in .inp file.
     TITLE: "",              OPTIONS: {},            RAINGAGES: {},
-    CONDUITS: {},           TIMESERIES: {}
+    CONDUITS: {},           TIMESERIES: []
   },
   lines = text.split(/\r\n|\r|\n/),
   section = null;
@@ -100,7 +100,7 @@ function parseInput(text) {
       var s = line.match(regex.section);
       // If the section has not yet been created, create one.
       if ('undefined' === typeof model[s[1].trim()])
-        model[s[1].trim()] = {};
+        model[s[1].trim()] = [];
       section = s[1].trim();
     } else if (regex.value.test(line)) {
       // Remove everything after the first semicolon:
@@ -108,8 +108,12 @@ function parseInput(text) {
       if (parser[section])
         parser[section](model,section, line, curDesc);
       else{
-        let xCount = Object.keys(model[section]).length;
-        model[section] = {...model[section], [xCount]: line};
+        // if it is an unknown section
+        if ('undefined' === typeof model[section]){
+          model[section] = [line];
+        } else {
+          model[section] = [...model[section], line]
+        }
       }
       curDesc = '';
     };
@@ -214,15 +218,11 @@ function dataToInpString(model){
   // sections I haven't implemented yet.
   function secToStr(model, key){
     let thisString = '['+ key + ']\n'
-    //model[key].map((line, i) => { inpString += line + '\n' })
-    console.log(model)
-    console.log(key)
-    /*model[key].forEach(element =>
-      thisString += element + '\n');*/
+    
     if (model[key]){
-      for (const [key2, value] of Object.entries(model[key])){
-        thisString += value + '\n';
-      }
+      model[key].forEach((val, i)=>{
+        thisString += val + '\n';
+      })
     }
 
     return thisString
@@ -264,25 +264,19 @@ function dataToInpString(model){
   // look for that element in the object. If there is an element of that 
   // kind associated with the model, write out the results to
   // the file.
+  // Keep in mind we are now using arrays for unkeyed entries, instead
+  // of creating keys for them. There is currently no need to create
+  // and manage keys for those objects.
   knownSecArray.forEach((element, index) => {
     if(validSecArray.includes(element)){
       fullString += parser[element](model) + '\n';
     } else {
+      // This is the portion that handles unknown sections. Let's use
+      // these as arrays so we dont create and manage keys.
+      // 
       fullString += secToStr(model, element) + '\n';
     }
   })
-
-  // For every key in the model,
-  // If the key is not in validSec, use secToStr
-  // to just copy the whole section in as a chunk of text.
-  /*for (const [key, value] of Object.entries(model)) {
-    console.log(`${key}: ${value}`);
-    if ( !validSec.includes(key)){
-      fullString += secToStr(model, key);
-    }
-  }*/
-  //fullString += keys.map((key, i)=>{ ~validSec.includes(key)?secToStr(model, key):''})
-  //keys.map((key, i)=>{ validSec.includes(key) === 'true' ? '':''})
 
   return fullString;
 }
