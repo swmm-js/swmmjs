@@ -1,0 +1,19 @@
+This will be the first large program I've developed in React, so please bear with me. swmm-js is a pet project of mine that I take no donations for and have no corporate affiliation. I'm ok for now. I'd like to express how meaningful it has been to communicate my hope for the development of this project and I'd like to share my vision for it's future.
+
+With Github, you can have your own website for free.
+
+With swmm-js, you can express your creativity and skill for free.
+
+Utilizing these and countless amazing React-based free tools, it is my hope that a more comfortable way to communicate environmental ideas and concepts will help to make the world less hostile to creative and healthy environmental integration.
+
+I'd like to use swmm-js help give tools to engineers that do not have enough representation in the scientific community. It is not right that one must learn English in order to be able to access software and concepts that could drastically improve their way of life. It is not good to insist that one must know everything about a topic in order to contribute meaningfully. swmm-js will never be a product you must pay for, and I promise I will give you the tools to utilize web commerce and the rights to charge for any and all services you wish to provide.
+
+Please steal the code.
+
+Please share it with your friends.
+
+Whether I'm successful is irrelevant. I am an idiot and my eyes and lungs are old. Still, something like this must exist for those with skill but no voice and no money.
+
+I'll slowly be rolling out my work with the system as my skills with React improve, but anyone who wants to contribute is more than welcome to help.
+
+Thanks so much.
