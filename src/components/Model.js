@@ -11,9 +11,7 @@ import data from '../data/nrcs_scs.json';
 import {Button} from 'react-bootstrap'
 import ScsTypeDropdown from './ScsTypeDropdown';
 
-
 function Model({model = {}, title='', onUpdate = f => f}) {
-
   return (
   <>
     <Container className='p-3'>
@@ -26,10 +24,14 @@ function Model({model = {}, title='', onUpdate = f => f}) {
             <ButtonSave model={model} onUpdate={onUpdate}></ButtonSave>
           </Col>
           <Col xs lg='2'>
-            <Button onClick={f=>{ funcx(data, "I", 6, model, onUpdate); }}>Calc</Button>
+            <Button onClick={f=>{ funcx(data, "I", 6, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
           </Col>
         </Row>
-        <ScsTypeDropdown model={model}></ScsTypeDropdown>
+        <Row className='justify-content-md-center'>
+          <Col xs lg='2'>
+            <ScsTypeDropdown model={model}></ScsTypeDropdown>
+          </Col>
+        </Row>
       </Container>
     </Container>
   </>

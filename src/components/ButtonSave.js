@@ -6,6 +6,7 @@ function ButtonSave({model = {}, onUpdate, style = {}}) {
   return (
     <>
       <Button 
+        style={{width:'100%'}}
         id="fileSave"
         onClick={()=>{saveInp(model); onUpdate(model)}}
       >Save</Button>

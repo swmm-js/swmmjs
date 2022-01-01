@@ -21,7 +21,7 @@ function ButtonFile({data = {}, onUpdate, style = {}}) {
 
   return (
     <>
-      <Button onClick={handleClick}>
+      <Button onClick={handleClick} style={{width:'100%'}}>
         File...
       </Button>
       <input

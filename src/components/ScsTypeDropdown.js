@@ -16,7 +16,7 @@ function ScsTypeDropdown({data = {}, onUpdate, style = {}}) {
 
   return (
     <>
-      <label htmlFor="ScsType" style={style, {color:'white', width: '50%'}}>SCS Type: 
+      <label htmlFor="ScsType" style={style, {color:'white', width: '100%'}}>SCS Type: 
         <DropdownButton style={{margin: '5px', width: '100%'}}
           className={"btn-block"}
           name="ScsType"
