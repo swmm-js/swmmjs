@@ -1,22 +1,9 @@
-/*
-1: get data into a JSON object.
-2:  for each element:
-      if there is an element that is H hours behind:
-        VALUE = x[now] - x[H hours previous]
-        6 hours previous means x[8:05] - x[2:05].
-      if there is no element that is H hours behind:
-        No entry.
-    for each resulting VALUE element:
-      find the time of maximum VALUE (maxTIME).
-    get the new START time by subtracting H hours from maxTIME.
-    for every element from START to maxTIME:
-      VALUE2 = VALUE[now] - $VALUE$[START]
-    for every VALUE2:
-      RESULT = VALUE2[now]/$VALUE$2[maxTIME]
-*/
+import scsData from './data/nrcs_scs.json'
 
 // Creates an NCRS SCS function
-function funcx(data, type, duration, model, onUpdate) {
+function funcx(type, dtime, model, onUpdate) {
+  const duration = parseInt(dtime)
+  const data = scsData;
   // Select only elements that start 'duration' hours after the beginning
   const newStartSet = data[type].filter((v) => {
     return v.time >= duration

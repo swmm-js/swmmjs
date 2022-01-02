@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, DropdownButton, Label, Form } from 'react-bootstrap'
 
-function ScsTypeDropdown({data = {}, onUpdate, style = {}}) {
+function ScsTypeDropdown({data = {}, onTypeChange = () => {}, style = {}}) {
 
   const options = [
     'I', 
@@ -11,7 +11,7 @@ function ScsTypeDropdown({data = {}, onUpdate, style = {}}) {
   ]
 
   function setType(e) {
-
+    onTypeChange(e.target.value)
   }
 
   return (
@@ -22,7 +22,7 @@ function ScsTypeDropdown({data = {}, onUpdate, style = {}}) {
             <Form.Select
               className="form-select form-select-lg"
               name="ScsType"
-              onChange={e=>setType(e.target.value)}
+              onChange={e=>setType(e)}
             >
               {options.map((option, i) => <option key={i} value={option} style={{width:'100%'}}>{option}</option>)}
             </Form.Select>

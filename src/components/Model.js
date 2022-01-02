@@ -5,9 +5,7 @@ import Row from 'react-bootstrap/Row'
 import OptionsMenu from './OptionsMenu'
 import ButtonFile from './ButtonFile'
 import ButtonSave from './ButtonSave'
-import Conduits from './Conduits'
 import funcx from "../ncrs_scs.js"
-import data from '../data/nrcs_scs.json'
 import {Button} from 'react-bootstrap'
 import ScsTypeDropdown from './ScsTypeDropdown'
 import ScsDurationDropdown from './ScsDurationDropdown'
@@ -15,6 +13,8 @@ import ScsDurationDropdown from './ScsDurationDropdown'
 
 function Model({model = {}, title='', onUpdate = () => {}}) {
   const [inpText, updateInpText] = useState('');
+  const [selectedType, onTypeChange] = useState('I');
+  const [selectedDuration, onDurationChange] = useState('6');
 
   return (
   <>
@@ -28,15 +28,15 @@ function Model({model = {}, title='', onUpdate = () => {}}) {
         </Row>
         <Row className='justify-content-md-center mt-2'>
           <Col xs lg='4'>
-            <ScsTypeDropdown model={model}></ScsTypeDropdown>
+            <ScsTypeDropdown model={model} onTypeChange={onTypeChange}></ScsTypeDropdown>
           </Col>
           <Col xs lg='4'>
-            <ScsDurationDropdown model={model}></ScsDurationDropdown>
+            <ScsDurationDropdown model={model} onDurationChange={onDurationChange}></ScsDurationDropdown>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-2'>
           <Col xs lg='8'>
-            <Button onClick={f=>{ funcx(data, "I", 6, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
+            <Button onClick={f=>{ funcx(selectedType, selectedDuration, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-3'>

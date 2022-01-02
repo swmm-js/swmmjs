@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, DropdownButton, Label, Form } from 'react-bootstrap'
 
-function ScsDurationDropdown({data = {}, onUpdate, style = {}}) {
+function ScsDurationDropdown({data = {}, onDurationChange = () => {}, style = {}}) {
 
   const options = [
     '6', 
@@ -11,7 +11,7 @@ function ScsDurationDropdown({data = {}, onUpdate, style = {}}) {
   ]
 
   function setType(e) {
-
+    onDurationChange(e.target.value)
   }
 
   return (
@@ -22,7 +22,7 @@ function ScsDurationDropdown({data = {}, onUpdate, style = {}}) {
             <Form.Select
               className="form-select form-select-lg"
               name="ScsDuration"
-              onChange={e=>setType(e.target.value)}
+              onChange={e=>setType(e)}
             >
               {options.map((option, i) => <option key={i} value={option} style={{width:'100%'}}>{option}</option>)}
             </Form.Select>
