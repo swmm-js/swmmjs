@@ -284,7 +284,7 @@ function dataToInpString(model){
 function saveInp(model) {
   let inpString = dataToInpString(model);
 
-  let fileOut = 'AutoInp.inp';
+  let fileOut = 'swmmjs.inp';
   let blob = new Blob([inpString], {type: 'text/csv'});
   if(window.navigator.msSaveOrOpenBlob){
     window.navigator.msSaveBlob(blob, fileOut);
@@ -298,6 +298,8 @@ function saveInp(model) {
 
     //window.URL.revokeObjectURL(elem.href);
   }
+
+  return inpString;
 }
 
 export {

@@ -2,13 +2,13 @@ import React from 'react';
 import { saveInp } from '../swmmjs.js'
 import { Button } from 'react-bootstrap'
 
-function ButtonSave({model = {}, onUpdate, style = {}}) {
+function ButtonSave({model = {}, onUpdate, fileTextUpdate = () => {}, style = {}}) {
   return (
     <>
       <Button 
         style={{width:'100%'}}
         id="fileSave"
-        onClick={()=>{saveInp(model); onUpdate(model)}}
+        onClick={()=>{fileTextUpdate(saveInp(model)); onUpdate(model)}}
       >Save</Button>
     </>
   )

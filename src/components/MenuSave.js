@@ -6,7 +6,9 @@ function MenuSave({model = {}, onUpdate, style = {}}) {
     <>
       <button 
         id="fileSave"
-        onClick={()=>{saveInp(model); onUpdate(model)}}
+        onClick={()=>{
+          onUpdate(model); 
+        }}
       >Save</button>
     </>
   )
