@@ -21,7 +21,7 @@ function ButtonFile({data = {}, selectedType, selectedDuration, selectedVolume, 
       fileTextUpdate(e.target.result)
       console.log(data.TIMESERIES)
     };
-    reader.readAsText(e.target.files[0])
+    reader.readAsText(e.target.files[0]) 
   }
 
   return (
