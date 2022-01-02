@@ -1,7 +1,7 @@
 import scsData from './data/nrcs_scs.json'
 
 // Creates an NCRS SCS function
-function funcx(type, dtime, model, onUpdate) {
+function funcx(type, dtime, volume, model, onUpdate) {
   const duration = parseInt(dtime)
   const data = scsData;
   // Select only elements that start 'duration' hours after the beginning
@@ -33,8 +33,11 @@ function funcx(type, dtime, model, onUpdate) {
   }, [Number.MIN_VALUE, 0])
 
   // Get the new START time by subtracting H hours from maxTIME.
-  let newStartTime = maxVal[1] - duration;
+  let newStartTime = parseFloat((maxVal[1] - duration).toPrecision(15));
 
+  console.log(maxVal[1])
+  console.log(duration)
+  console.log(newStartTime)
   let valAtNewStart = data[type][data[type].findIndex((el)=>{return el.time === newStartTime})].frac;
   // VALUE2 = VALUE[now] - $VALUE$[newSTART]
   const val2Set = data[type].map((el, i) => ({
@@ -81,13 +84,14 @@ function funcx(type, dtime, model, onUpdate) {
   }
 
   modelUp.TIMESERIES = resultSet.reduce((map, obj, i) => 
-    {map[i] = {"TimeSeries": "swmmjsTS","Date": "","Time": String(obj.time),"Value": String(obj.frac)}; return map;}, [] );
+    {map[i] = {"TimeSeries": "swmmjsTS","Date": "","Time": String(parseFloat((obj.time - newStartTime).toPrecision(7))),"Value": String(obj.frac * volume)}; return map;}, [] );
 
   let newSeries = [...model.TIMESERIES, ...modelUp.TIMESERIES]
   let newGages  = {...model.RAINGAGES, ...modelUp.RAINGAGES}
   onUpdate({...model}, model.TIMESERIES = newSeries)
   onUpdate({...model}, model.RAINGAGES = newGages)
   onUpdate({...model}, {...model})
+  console.log(model)
 
   return;
 }

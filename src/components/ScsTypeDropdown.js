@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, DropdownButton, Label, Form } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
 function ScsTypeDropdown({data = {}, onTypeChange = () => {}, style = {}}) {
 

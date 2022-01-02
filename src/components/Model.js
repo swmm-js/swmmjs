@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import OptionsMenu from './OptionsMenu'
 import ButtonFile from './ButtonFile'
 import ButtonSave from './ButtonSave'
 import funcx from "../ncrs_scs.js"
 import {Button} from 'react-bootstrap'
 import ScsTypeDropdown from './ScsTypeDropdown'
 import ScsDurationDropdown from './ScsDurationDropdown'
-//import InpTextView from './InpTextView'
+import ScsVolumeNUD from './ScsVolumeNUD'
 
 function Model({model = {}, title='', onUpdate = () => {}}) {
   const [inpText, updateInpText] = useState('');
   const [selectedType, onTypeChange] = useState('I');
   const [selectedDuration, onDurationChange] = useState('6');
+  const [selectedVolume, onVolumeChange] = useState(1);
 
   return (
   <>
@@ -27,16 +27,19 @@ function Model({model = {}, title='', onUpdate = () => {}}) {
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-2'>
-          <Col xs lg='4'>
+          <Col xs lg='3'>
             <ScsTypeDropdown model={model} onTypeChange={onTypeChange}></ScsTypeDropdown>
           </Col>
-          <Col xs lg='4'>
+          <Col xs lg='2'>
             <ScsDurationDropdown model={model} onDurationChange={onDurationChange}></ScsDurationDropdown>
+          </Col>
+          <Col xs lg='3'>
+            <ScsVolumeNUD model={model} onVolumeChange={onVolumeChange}></ScsVolumeNUD>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-2'>
           <Col xs lg='8'>
-            <Button onClick={f=>{ funcx(selectedType, selectedDuration, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
+            <Button onClick={f=>{ funcx(selectedType, selectedDuration, selectedVolume, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-3'>
