@@ -1,8 +1,9 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import { parseInput } from '../swmmjs.js'
+import funcx from "../ncrs_scs.js"
 
-function ButtonFile({data = {}, onUpdate, style = {}}) {
+function ButtonFile({data = {}, selectedType, selectedDuration, selectedVolume, onUpdate=onUpdate, fileTextUpdate = () => {}, style = {}}) {
   const hiddenFileInput = React.useRef(null);
   const handleClick = event => {
     hiddenFileInput.current.click();
@@ -15,6 +16,10 @@ function ButtonFile({data = {}, onUpdate, style = {}}) {
       const theModel = parseInput(text);
 
       onUpdate(theModel)
+      
+      console.log(selectedType + ' ' + selectedDuration + ' ' + selectedVolume)
+      fileTextUpdate(e.target.result)
+      console.log(data.TIMESERIES)
     };
     reader.readAsText(e.target.files[0])
   }
@@ -60,8 +65,3 @@ function ButtonFile({data = {}, onUpdate, style = {}}) {
 }
 
 export default ButtonFile;
-
-
-<div class="col-md-12 mb-12">
-  <button type="button" id="save-modal-inflows ripplebutton btn-block" class="btn btn-primary">Save changes</button>
-</div>

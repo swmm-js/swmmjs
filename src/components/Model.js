@@ -23,7 +23,14 @@ function Model({model = {}, title='', onUpdate = () => {}}) {
       <Container className='p-5 mb-4 bg-dark rounded-3'>
         <Row className='justify-content-md-center mt-2'>
           <Col xs lg='8'>
-            <ButtonFile model={model} onUpdate={onUpdate}></ButtonFile>
+            <ButtonFile 
+              model={model} 
+              selectedType={selectedType} 
+              selectedDuration={selectedDuration} 
+              selectedVolume={selectedVolume} 
+              onUpdate={onUpdate} 
+              fileTextUpdate={updateInpText}>
+            </ButtonFile>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-2'>
@@ -39,7 +46,7 @@ function Model({model = {}, title='', onUpdate = () => {}}) {
         </Row>
         <Row className='justify-content-md-center mt-2'>
           <Col xs lg='8'>
-            <Button onClick={f=>{ funcx(selectedType, selectedDuration, selectedVolume, model, onUpdate); }} style={{width: '100%'}}>Calc</Button>
+            <Button onClick={f=>{ funcx(selectedType, selectedDuration, selectedVolume, model, onUpdate, updateInpText); }} style={{width: '100%'}}>Calc</Button>
           </Col>
         </Row>
         <Row className='justify-content-md-center mt-3'>

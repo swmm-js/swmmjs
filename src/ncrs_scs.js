@@ -1,7 +1,9 @@
 import scsData from './data/nrcs_scs.json'
+import { dataToInpString } from './swmmjs';
 
 // Creates an NCRS SCS function
-function funcx(type, dtime, volume, model, onUpdate) {
+function funcx(type, dtime, volume, model, onUpdate, fileTextUpdate) {
+  console.log(dtime + ' ' + volume + ' ' + type)
   const duration = parseInt(dtime)
   const data = scsData;
   // Select only elements that start 'duration' hours after the beginning
@@ -86,11 +88,12 @@ function funcx(type, dtime, volume, model, onUpdate) {
   modelUp.TIMESERIES = resultSet.reduce((map, obj, i) => 
     {map[i] = {"TimeSeries": "swmmjsTS","Date": "","Time": String(parseFloat((obj.time - newStartTime).toPrecision(7))),"Value": String(obj.frac * volume)}; return map;}, [] );
 
-  let newSeries = [...model.TIMESERIES, ...modelUp.TIMESERIES]
-  let newGages  = {...model.RAINGAGES, ...modelUp.RAINGAGES}
+  let newSeries = [...model.TIMESERIES||[], ...modelUp.TIMESERIES]
+  let newGages  = {...model.RAINGAGES||{}, ...modelUp.RAINGAGES}
   onUpdate({...model}, model.TIMESERIES = newSeries)
   onUpdate({...model}, model.RAINGAGES = newGages)
   onUpdate({...model}, {...model})
+  fileTextUpdate(dataToInpString(model))
   console.log(model)
 
   return;
