@@ -18,7 +18,7 @@ function Model({model = {}, title='', onUpdate = () => {}}) {
 
   return (
   <>
-  <div style={{height: '100vh', backgroundColor: 'black'}}>
+  <div style={{height: '200vh', backgroundColor: 'black'}}>
     <Container className='p-3' >
       <Container className='p-5 mb-4 bg-dark rounded-3'>
         <Row className='justify-content-md-center mt-2'>
