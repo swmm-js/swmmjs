@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 // in a flat set. This structure is not great because it requires
 // at least one search algorithm to operate. Instead, the structure
 // should be hierarchical: 
-//  Series <string>: 
+//  Series <string>:  
 //  [ 
 //    {
 //      Date <string>: optional
