@@ -195,74 +195,65 @@
           "Description": ""
       }
   },
-  "TIMESERIES": [
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "0:00",
-          "Value": 0
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "1:00",
-          "Value": 0.25
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "2:00",
-          "Value": 0.5
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "3:00",
-          "Value": 0.8
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "4:00",
-          "Value": 0.4
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "5:00",
-          "Value": 0.1
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "6:00",
-          "Value": 0
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "27:00",
-          "Value": 0
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "28:00",
-          "Value": 0.4
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "29:00",
-          "Value": 0.2
-      },
-      {
-          "TimeSeries": "TS1",
-          "Date": "",
-          "Time": "30:00",
-          "Value": 0
-      }
-  ],
+  "TIMESERIES": {
+    "TS1": [
+        {
+            "Date": "",
+            "Time": "0:00",
+            "Value": 0
+        },
+        {
+            "Date": "",
+            "Time": "1:00",
+            "Value": 0.25
+        },
+        {
+            "Date": "",
+            "Time": "2:00",
+            "Value": 0.5
+        },
+        {
+            "Date": "",
+            "Time": "3:00",
+            "Value": 0.8
+        },
+        {
+            "Date": "",
+            "Time": "4:00",
+            "Value": 0.4
+        },
+        {
+            "Date": "",
+            "Time": "5:00",
+            "Value": 0.1
+        },
+        {
+            "Date": "",
+            "Time": "6:00",
+            "Value": 0
+        },
+        {
+            "Date": "",
+            "Time": "27:00",
+            "Value": 0
+        },
+        {
+            "Date": "",
+            "Time": "28:00",
+            "Value": 0.4
+        },
+        {
+            "Date": "",
+            "Time": "29:00",
+            "Value": 0.2
+        },
+        {
+            "Date": "",
+            "Time": "30:00",
+            "Value": 0
+        }
+      ]
+    },
   "EVAPORATION": [
       "CONSTANT         0.0",
       "DRY_ONLY         NO"

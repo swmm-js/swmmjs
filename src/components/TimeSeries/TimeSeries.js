@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import TimeSeriesName from './TimeSeriesName';
+import TimeSeriesRecordIterator from './TimeSeriesRecordIterator'
 
 // Cycling through TimeSeries entries is probably
 // not the best way to go, but for simple interfaces
@@ -19,43 +21,47 @@ import { useState, useEffect } from 'react'
 //      Value <number>: required
 //    },
 //  ]
-function TimSeries({style={}, data={}, onUpdate=f=>f}){
-  const [linkID, setLinkID] = useState(Object.keys(data.CONDUITS)[0]);
-
-  // This should probably be a useMemo, and not a
-  // useEffect call. 
+function TimeSeries({style={}, data={}, onUpdate=f=>f}){
+  const [timeseriesID, setTimeseriesID] = useState(Object.keys(data.TIMESERIES)[0]);
 
   useEffect(() => {
-    setLinkID(Object.keys(data.CONDUITS)[0])
-  }, [data.CONDUITS])
+    setTimeseriesID(Object.keys(data.TIMESERIES)[0])
+  }, [data.TIMESERIES])
 
   
   function nextID(){
-    let keys = Object.keys(data.CONDUITS);
-    if(keys.indexOf(linkID) < keys.length - 1){
-      let nextIndex = keys.indexOf(linkID) + 1;
-      setLinkID(keys[nextIndex]);
+    let keys = Object.keys(data.TIMESERIES);
+    if(keys.indexOf(timeseriesID) < keys.length - 1){
+      let nextIndex = keys.indexOf(timeseriesID) + 1;
+      setTimeseriesID(keys[nextIndex]);
     }
   }
 
   // Same here.
   function prevID(){
-    let keys = Object.keys(data.CONDUITS);
-    if(keys.indexOf(linkID) > 0){
-      let nextIndex = keys.indexOf(linkID) - 1;
-      setLinkID(keys[nextIndex]);
+    let keys = Object.keys(data.TIMESERIES);
+    if(keys.indexOf(timeseriesID) > 0){
+      let nextIndex = keys.indexOf(timeseriesID) - 1;
+      setTimeseriesID(keys[nextIndex]);
     }
   }
 
   return(
     <>
-      <div>------------CONDUITS-------------</div>
-      <div>{linkID}</div>
-      <ConduitsName data={data} onUpdate={onUpdate} style={style} conduitName={linkID} />
+      <div>------------TIMESERIES-------------</div>
+      <div>{timeseriesID}</div>
+      <TimeSeriesName data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
+      <TimeSeriesRecordIterator data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
+      
+      {/*
+      <TimeSeriesDate data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
+      <TimeSeriesTime data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
+      <TimeSeriesValue data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
+      */}
       <button onClick={prevID}>Prev</button>
       <button onClick={nextID}>Next</button>
     </>
   )
 }
 
-export default Conduits;
+export default TimeSeries;
