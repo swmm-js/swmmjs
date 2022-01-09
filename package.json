@@ -1,6 +1,6 @@
 {
   "name": "swmm-js",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "homepage": "http://swmm-js.github.io/swmmjs",
   "dependencies": {
@@ -43,7 +43,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "swmm-js demo app.",
+  "description": "Simple development example for creating swmm apps with swmm-js.",
   "main": "index.js",
   "keywords": [],
   "author": "",
