@@ -54,21 +54,44 @@ function parseInput(text) {
         };
       }
     },
-    TIMESERIES: function(model, section, line) {
+    // TIMESERIES is a special case. TIMESERIES is stored
+    // as a single mulikeyed array within the inp file.
+    // This stucture should be changed to the following:
+    //  [
+    //    Series <string>: 
+    //    [ 
+    //      {
+    //        Date <string>: optional
+    //        Time <string>: optional?
+    //        Value <number>: required
+    //      }, ...
+    //    ], ...
+    //  ]
+    TIMESERIES: function(paramodel, section, line) {
       line = (line).trim();
       let m = line.split(/\b\s+/);
+
+      console.log('^^' + m[0].trim())
+      console.log(typeof paramodel[section][m[0].trim()])
+      // First check for or add the array name:
+      if (m && m[0] && ('object' !== typeof paramodel[section][m[0].trim()])){
+        paramodel[section][m[0].trim()] = []
+      }
       if (m && m.length === 4){
-        model[section].push( {
+        console.log(paramodel[section][m[0].trim()])
+        paramodel[section][m[0].trim()].push({
                         TimeSeries: m[0].trim(),
                         Date: m[1].trim(), 
                         Time: m[2].trim(),
                         Value: parseFloat(m[3])});
       } else {
-        model[section].push( {
-                        TimeSeries: m[0].trim(),
-                        Date: '', 
-                        Time: m[1].trim(),
-                        Value: parseFloat(m[2])});
+        console.log(paramodel[section])
+        console.log(m[0].trim())
+        paramodel[section][m[0].trim()].push( {
+          TimeSeries: m[0].trim(),
+          Date: '', 
+          Time: m[1].trim(),
+          Value: parseFloat(m[2])})
       }
     },  
   },
@@ -91,33 +114,52 @@ function parseInput(text) {
     if (regex.comment.test(line)) {
       curDesc = '';
       return;
-    }
+    } 
+    // If the line is a description
     else if (regex.description.test(line)) {
       // Get the comment without the semicolon
       curDesc = line.slice(1, line.length);
-
-    } else if (regex.section.test(line)) {
+    } 
+    // If the line is a section header
+    else if (regex.section.test(line)) {
       var s = line.match(regex.section);
       // If the section has not yet been created, create one.
       if ('undefined' === typeof model[s[1].trim()])
+      {
         model[s[1].trim()] = [];
+      } 
       section = s[1].trim();
-    } else if (regex.value.test(line)) {
+    } 
+    // If the line is a data line
+    else if (regex.value.test(line)) {
       // Remove everything after the first semicolon:
       line = line.split(';')[0];
-      if (parser[section])
-        parser[section](model,section, line, curDesc);
+
+      // If the parser has a function for the section, run that
+      if (parser[section]){
+        console.log('--' + section)
+        console.log(model[section])
+        parser[section](model, section, line, curDesc);
+      }
+      // It the parser doesn't have a function for the section, 
+      // then just read each line in as a string to an array.
       else{
         // if it is an unknown section
         if ('undefined' === typeof model[section]){
+          console.log('==' + section)
           model[section] = [line];
-        } else {
+        } 
+        // If the section exists, just destructure and append.
+        else {
+          console.log('++' + section)
           model[section] = [...model[section], line]
         }
       }
       curDesc = '';
     };
   });
+
+  console.log(model);
 
   return model;
 };
@@ -179,12 +221,12 @@ function dataToInpString(model){
         if(typeof model[secStr][entry].Description !== 'undefined' && model[secStr][entry].Description.length > 0){
             inpString += ';' + model[secStr][entry].Description + '\n';
         }
-        inpString += entry.padEnd(17, ' ');
-        inpString += model[secStr][entry].Format.padEnd(11, ' ');
-        inpString += model[secStr][entry].Interval.padEnd(7, ' ');
-        inpString += model[secStr][entry].SCF.toString().padEnd(7, ' ');
-        inpString += model[secStr][entry].Source.padEnd(11, ' ');
-        inpString += model[secStr][entry].SeriesName.padEnd(11, ' ');
+        inpString += entry.padEnd(17, ' ') + ' '
+        inpString += model[secStr][entry].Format.padEnd(11, ' ') + ' '
+        inpString += model[secStr][entry].Interval.padEnd(7, ' ') + ' '
+        inpString += model[secStr][entry].SCF.toString().padEnd(7, ' ') + ' '
+        inpString += model[secStr][entry].Source.padEnd(11, ' ') + ' '
+        inpString += model[secStr][entry].SeriesName.padEnd(11, ' ') + ' '
         inpString += '\n';
       }
       inpString += '\n';
@@ -195,11 +237,13 @@ function dataToInpString(model){
       let secStr = 'TIMESERIES'
       let inpString ='[TIMESERIES]\n;;Time Series    Date       Time       Value     \n;;-------------- ---------- ---------- ----------\n'        
       for (let entry in model[secStr]) {
-        inpString += model[secStr][entry].TimeSeries.padEnd(17, ' ') + ' ';
-        inpString += model[secStr][entry].Date.padEnd(11, ' ') + ' ';
-        inpString += model[secStr][entry].Time.padEnd(11, ' ') + ' ';
-        inpString += model[secStr][entry].Value.toString().padEnd(11, ' ') + ' ';
-        inpString += '\n';
+        for(let el in model[secStr][entry]){
+          inpString += entry.padEnd(17, ' ') + ' ';
+          inpString += model[secStr][entry][el].Date.padEnd(11, ' ') + ' ';
+          inpString += model[secStr][entry][el].Time.padEnd(11, ' ') + ' ';
+          inpString += model[secStr][entry][el].Value.toString().padEnd(11, ' ') + ' ';
+          inpString += '\n';
+        }
       }
       inpString += '\n';
 

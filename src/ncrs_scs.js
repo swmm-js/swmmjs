@@ -74,24 +74,22 @@ function funcx(type, dtime, volume, model, onUpdate, fileTextUpdate) {
     Return the object(s) and update the model using the returned objects.
   */
   let modelUp = { RAINGAGES: {}, TIMESERIES: [] }
-  modelUp.RAINGAGES = {
-    "swmmjsRG": {
-      "Format": "CUMULATIVE",
-      "Interval": "0:06",
-      "SCF": "1.0",
-      "Source": "TIMESERIES",
-      "SeriesName": "swmmjsTS",
-      "Description": ""
-    }
+  let newRAINGAGE = {
+    "Format": "CUMULATIVE",
+    "Interval": "0:06",
+    "SCF": "1.0",
+    "Source": "TIMESERIES",
+    "SeriesName": "swmmjsTS",
+    "Description": ""
   }
 
-  modelUp.TIMESERIES = resultSet.reduce((map, obj, i) => 
-    {map[i] = {"TimeSeries": "swmmjsTS","Date": "","Time": String(parseFloat((obj.time - newStartTime).toPrecision(7))),"Value": String(obj.frac * volume)}; return map;}, [] );
+  modelUp.TIMESERIES.swmmjsTS = resultSet.reduce((map, obj, i) => 
+    {map[i] = {"Date": "","Time": String(parseFloat((obj.time - newStartTime).toPrecision(7))),"Value": String(obj.frac * volume)}; return map;}, [] );
 
-  let newSeries = [...model.TIMESERIES||[], ...modelUp.TIMESERIES]
-  let newGages  = {...model.RAINGAGES||{}, ...modelUp.RAINGAGES}
-  onUpdate({...model}, model.TIMESERIES = newSeries)
-  onUpdate({...model}, model.RAINGAGES = newGages)
+  //let newSeries = [...model.TIMESERIES||[], ...modelUp.TIMESERIES]
+  //let newGages  = model.RAINGAGES.swmmjsTS
+  onUpdate({...model}, model.TIMESERIES.swmmjsTS = modelUp.TIMESERIES.swmmjsTS)
+  onUpdate({...model}, model.RAINGAGES.swmmjsRG = newRAINGAGE)
   onUpdate({...model}, {...model})
   fileTextUpdate(dataToInpString(model))
   console.log(model)

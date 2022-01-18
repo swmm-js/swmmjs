@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import TimeSeriesName from './TimeSeriesName';
 import TimeSeriesRecordIterator from './TimeSeriesRecordIterator'
+import TimeSeriesTable from './TimeSeriesTable';
+import TimeSeriesChart from './TimeSeriesChart'
 
 // Cycling through TimeSeries entries is probably
 // not the best way to go, but for simple interfaces
@@ -28,6 +30,12 @@ function TimeSeries({style={}, data={}, onUpdate=f=>f}){
     setTimeseriesID(Object.keys(data.TIMESERIES)[0])
   }, [data.TIMESERIES])
 
+  // Use this function to update the timeseries object.
+  function updateTimeseries(seriesData){
+    onUpdate({...data}, data.TIMESERIES[timeseriesID] = seriesData)
+    console.log(data)
+  }
+
   
   function nextID(){
     let keys = Object.keys(data.TIMESERIES);
@@ -51,13 +59,11 @@ function TimeSeries({style={}, data={}, onUpdate=f=>f}){
       <div>------------TIMESERIES-------------</div>
       <div>{timeseriesID}</div>
       <TimeSeriesName data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
-      <TimeSeriesRecordIterator data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
       
-      {/*
-      <TimeSeriesDate data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
-      <TimeSeriesTime data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
-      <TimeSeriesValue data={data} onUpdate={onUpdate} style={style} timeseriesName={timeseriesID} />
-      */}
+      <TimeSeriesChart data={data.TIMESERIES[timeseriesID]} onUpdate={updateTimeseries} style={style} timeseriesName={timeseriesID} />
+      
+      <TimeSeriesTable data={data.TIMESERIES[timeseriesID]} onUpdate={updateTimeseries} style={style} timeseriesName={timeseriesID} />
+      
       <button onClick={prevID}>Prev</button>
       <button onClick={nextID}>Next</button>
     </>
